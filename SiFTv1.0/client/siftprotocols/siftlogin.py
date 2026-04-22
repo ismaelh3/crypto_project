@@ -6,11 +6,9 @@ from Crypto.Protocol.KDF import PBKDF2, HKDF
 from Crypto.Random import get_random_bytes
 from siftprotocols.siftmtp import SiFT_MTP, SiFT_MTP_Error
 
-
 class SiFT_LOGIN_Error(Exception):
     def __init__(self, err_msg):
         self.err_msg = err_msg
-
 
 class SiFT_LOGIN:
     def __init__(self, mtp):
