@@ -29,7 +29,7 @@ class SiFT_LOGIN:
     # sets user passwords dictionary (to be used by the server)
     def set_server_users(self, users):
         self.server_users = users
-
+        
     # builds a login request from a dictionary
     # v1.0 format:
     # <timestamp>\n
