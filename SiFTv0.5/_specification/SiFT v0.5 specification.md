@@ -1,5 +1,4 @@
 # Simple File Transfer v0.5
-
 This document specifies version 0.5 of the Simple File Transfer (SiFT) protocol. SiFT can be used by a client to send file commands to a server, which executes those commands. SiFT supports the following 7 commands:
 
 - __pwd__ --> Print current working directory: Returns to the client the name of the current working directory on the server.
