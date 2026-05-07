@@ -5,11 +5,9 @@ from Crypto.Cipher import AES, PKCS1_OAEP
 from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 
-
 class SiFT_MTP_Error(Exception):
     def __init__(self, err_msg):
         self.err_msg = err_msg
-
 
 class SiFT_MTP:
     def __init__(self, peer_socket):
@@ -73,10 +71,7 @@ class SiFT_MTP:
         # last received sequence number
         self.last_recv_sqn = 0
 
-    # -------------------------------------------------------------------------
     # Key setup helpers
-    # -------------------------------------------------------------------------
-
     def set_server_public_key(self, key):
         if isinstance(key, RSA.RsaKey):
             self.server_public_key = key.publickey() if key.has_private() else key
@@ -105,10 +100,7 @@ class SiFT_MTP:
             raise SiFT_MTP_Error('Invalid transfer key length')
         self.transfer_key = bytes(key)
 
-    # -------------------------------------------------------------------------
-    # Header helpers
-    # -------------------------------------------------------------------------
-
+	# parses a message header and returns a dictionary containing the header fields
     def parse_msg_header(self, msg_hdr):
         if len(msg_hdr) != self.size_msg_hdr:
             raise SiFT_MTP_Error('Invalid message header size')
@@ -290,6 +282,7 @@ class SiFT_MTP:
     # Receive message
     # -------------------------------------------------------------------------
 
+	# receives and parses message, returns msg_type and msg_payload
     def receive_msg(self):
         try:
             msg_hdr = self.receive_bytes(self.size_msg_hdr)

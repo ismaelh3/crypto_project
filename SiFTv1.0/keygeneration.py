@@ -17,6 +17,8 @@ def generateKeyPair():
     with open(os.path.join(base, 'client', 'server_public.pem'), 'wb') as f:
         f.write(public_pem)
 
+    ########### KEY GENERATED ###########
+    
     print('RSA key pair generated.')
     print('  Private key -> server/server_private.pem')
     print('  Public key  -> client/server_public.pem')

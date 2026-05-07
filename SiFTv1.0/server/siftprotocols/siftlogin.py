@@ -19,7 +19,7 @@ class SiFT_LOGIN:
         self.delimiter = '\n'
         self.coding = 'utf-8'
 
-        # Timestamp Window: +- 1 Second
+        # Timestamp Window
         self.timestamp_window_ns = 2_000_000_000
 
         # --------- STATE ------------
@@ -105,14 +105,7 @@ class SiFT_LOGIN:
     # check correctness of a provided password
     def check_password(self, pwd, usr_struct):
 
-        pwdhash = PBKDF2(
-            pwd,
-            usr_struct['salt'],
-            len(usr_struct['pwdhash']),
-            count=usr_struct['icount'],
-            hmac_hash_module=SHA256
-        )
-
+        pwdhash = PBKDF2(pwd, usr_struct['salt'], len(usr_struct['pwdhash']),count=usr_struct['icount'],hmac_hash_module=SHA256)
         return pwdhash == usr_struct['pwdhash']
 
     # checks freshness of timestamp according to configured acceptance window
@@ -137,13 +130,7 @@ class SiFT_LOGIN:
 
         ikm = client_random + server_random
 
-        transfer_key = HKDF(
-            master=ikm,
-            key_len=32,
-            salt=request_hash,
-            hashmod=SHA256,
-            num_keys=1
-        )
+        transfer_key = HKDF(master=ikm, key_len=32, salt=request_hash, hashmod=SHA256, num_keys=1)
 
         return transfer_key
 

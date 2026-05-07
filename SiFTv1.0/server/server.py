@@ -55,8 +55,8 @@ class Server:
         
         with open("server_private.pem", "rb") as f:
             private_key = RSA.import_key(f.read())
+            
         loginp.set_server_private_key(private_key)
-
         users = self.load_users(self.server_usersfile)
         loginp.set_server_users(users)
 
