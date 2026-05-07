@@ -1,11 +1,10 @@
 #python3
 
 import sys, threading, socket, getpass
+from Crypto.PublicKey import RSA
 from siftprotocols.siftmtp import SiFT_MTP, SiFT_MTP_Error
 from siftprotocols.siftlogin import SiFT_LOGIN, SiFT_LOGIN_Error
 from siftprotocols.siftcmd import SiFT_CMD, SiFT_CMD_Error
-from cryptography.hazmat.primitives import serialization
-from keygeneration import generateKeyPair
 
 class Server:
     def __init__(self):
@@ -48,28 +47,18 @@ class Server:
             client_socket, addr = self.server_socket.accept()
             threading.Thread(target=self.handle_client, args=(client_socket, addr, )).start()
 
-
     def handle_client(self, client_socket, addr):
         print('New client on ' + addr[0] + ':' + str(addr[1]))
 
         mtp = SiFT_MTP(client_socket)
         loginp = SiFT_LOGIN(mtp)
         
-        ################################ NEW ################################
-        
-        private_key = generateKeyPair()
-        serialization.load_pem_private_key(private_key, password = None)
-        
-        with open("./server/key.pem", "rb") as file:
-            private_key = serialization.load_pem_private_key(file.read(), password = None)
-        
+        with open("server_private.pem", "rb") as f:
+            private_key = RSA.import_key(f.read())
         loginp.set_server_private_key(private_key)
-            
-        ################################ NEW ################################
 
         users = self.load_users(self.server_usersfile)
         loginp.set_server_users(users)
-        
 
         try:
             user = loginp.handle_login_server()
@@ -91,7 +80,6 @@ class Server:
                 print('Closing connection with client on ' + addr[0] + ':' + str(addr[1]))
                 client_socket.close()
                 return
-
 
 # main
 if __name__ == '__main__':

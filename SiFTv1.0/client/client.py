@@ -2,13 +2,12 @@
 
 import sys, os, socket, cmd, getpass
 from Crypto.Hash import SHA256
+from Crypto.PublicKey import RSA
 from siftprotocols.siftmtp import SiFT_MTP, SiFT_MTP_Error
 from siftprotocols.siftlogin import SiFT_LOGIN, SiFT_LOGIN_Error
 from siftprotocols.siftcmd import SiFT_CMD, SiFT_CMD_Error
 from siftprotocols.siftupl import SiFT_UPL, SiFT_UPL_Error
 from siftprotocols.siftdnl import SiFT_DNL, SiFT_DNL_Error
-from cryptography.hazmat.primitives import serialization
-from keygeneration import generateKeyPair
 
 # ----------- CONFIG -------------
 server_ip = '127.0.0.1' # localhost
@@ -203,17 +202,9 @@ if __name__ == '__main__':
     mtp = SiFT_MTP(sckt)
     loginp = SiFT_LOGIN(mtp)
     
-    ################################ NEW ################################
-    
-    private_key = generateKeyPair()
-    serialization.load_pem_private_key(private_key, password = None)
-    
     with open("server_public.pem", "rb") as f:
-        public_key = serialization.load_pem_public_key(f.read())
-
+        public_key = RSA.import_key(f.read())
     loginp.set_server_public_key(public_key)
-    
-    ################################ NEW ################################
     
     print()
     username = input('   Username: ')

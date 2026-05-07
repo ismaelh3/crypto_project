@@ -1,19 +1,25 @@
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.primitives import serialization
+#python3
 
-######### RSA ENCRYPTION SCHEME HERE #########   
+import os
+from Crypto.PublicKey import RSA
 
-def generateKeyPair(username):
-    private_key = rsa.generate_private_key(public_exponent = 65537, key_size = 2048)
-    public_key = private_key.public_key()
+def generateKeyPair():
+    key = RSA.generate(2048)
 
-    private_key_bytes = private_key.private_bytes(encoding = serialization.Encoding.PEM, format = "PEM", encryption_algorithm = serialization.NoEncryption())
-    public_key_bytes = public_key.public_bytes(encoding = serialization.Encoding.PEM, format = "PEM", encryption_algorithm = serialization.NoEncryption())
+    private_pem = key.export_key('PEM')
+    public_pem = key.publickey().export_key('PEM')
 
-    with open("./server/server_private.pem".format(username), "wb") as file:
-        file.write(private_key_bytes)  
-        
-    with open("./client/client_public.pem".format(username), "wb") as file:
-        file.write(public_key_bytes)        
+    base = os.path.dirname(os.path.abspath(__file__))
 
-#################### END ####################
+    with open(os.path.join(base, 'server', 'server_private.pem'), 'wb') as f:
+        f.write(private_pem)
+
+    with open(os.path.join(base, 'client', 'server_public.pem'), 'wb') as f:
+        f.write(public_pem)
+
+    print('RSA key pair generated.')
+    print('  Private key -> server/server_private.pem')
+    print('  Public key  -> client/server_public.pem')
+
+if __name__ == '__main__':
+    generateKeyPair()

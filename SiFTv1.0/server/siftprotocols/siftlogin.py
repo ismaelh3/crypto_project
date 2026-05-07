@@ -26,6 +26,12 @@ class SiFT_LOGIN:
         self.mtp = mtp
         self.server_users = None
 
+    def set_server_private_key(self, key):
+        self.mtp.set_server_private_key(key)
+
+    def set_server_public_key(self, key):
+        self.mtp.set_server_public_key(key)
+
     # sets user passwords dictionary (to be used by the server)
     def set_server_users(self, users):
         self.server_users = users
@@ -160,9 +166,9 @@ class SiFT_LOGIN:
         if self.DEBUG:
             print('Incoming payload (' + str(len(msg_payload)) + '):')
             try:
-                print(msg_payload[:max(512, len(msg_payload))].decode('utf-8'))
+                print(msg_payload[:min(512, len(msg_payload))].decode('utf-8'))
             except Exception:
-                print(msg_payload[:max(512, len(msg_payload))])
+                print(msg_payload[:min(512, len(msg_payload))])
             print('------------------------------------------')
         # DEBUG
 
@@ -200,7 +206,7 @@ class SiFT_LOGIN:
         # DEBUG
         if self.DEBUG:
             print('Outgoing payload (' + str(len(msg_payload)) + '):')
-            print(msg_payload[:max(512, len(msg_payload))].decode('utf-8'))
+            print(msg_payload[:min(512, len(msg_payload))].decode('utf-8'))
             print('------------------------------------------')
         # DEBUG
 
@@ -249,7 +255,7 @@ class SiFT_LOGIN:
         # DEBUG
         if self.DEBUG:
             print('Outgoing payload (' + str(len(msg_payload)) + '):')
-            print(msg_payload[:max(512, len(msg_payload))].decode('utf-8'))
+            print(msg_payload[:min(512, len(msg_payload))].decode('utf-8'))
             print('------------------------------------------')
         # DEBUG
 
@@ -280,9 +286,9 @@ class SiFT_LOGIN:
         if self.DEBUG:
             print('Incoming payload (' + str(len(msg_payload)) + '):')
             try:
-                print(msg_payload[:max(512, len(msg_payload))].decode('utf-8'))
+                print(msg_payload[:min(512, len(msg_payload))].decode('utf-8'))
             except Exception:
-                print(msg_payload[:max(512, len(msg_payload))])
+                print(msg_payload[:min(512, len(msg_payload))])
             print('------------------------------------------')
         # DEBUG
 
