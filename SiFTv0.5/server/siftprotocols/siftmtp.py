@@ -3,7 +3,6 @@
 import socket
 
 class SiFT_MTP_Error(Exception):
-
     def __init__(self, err_msg):
         self.err_msg = err_msg
 
@@ -36,20 +35,16 @@ class SiFT_MTP:
 		# --------- STATE ------------
 		self.peer_socket = peer_socket
 
-
 	# parses a message header and returns a dictionary containing the header fields
 	def parse_msg_header(self, msg_hdr):
-
 		parsed_msg_hdr, i = {}, 0
 		parsed_msg_hdr['ver'], i = msg_hdr[i:i+self.size_msg_hdr_ver], i+self.size_msg_hdr_ver 
 		parsed_msg_hdr['typ'], i = msg_hdr[i:i+self.size_msg_hdr_typ], i+self.size_msg_hdr_typ
 		parsed_msg_hdr['len'] = msg_hdr[i:i+self.size_msg_hdr_len]
 		return parsed_msg_hdr
 
-
 	# receives n bytes from the peer socket
 	def receive_bytes(self, n):
-
 		bytes_received = b''
 		bytes_count = 0
 		while bytes_count < n:
@@ -135,5 +130,3 @@ class SiFT_MTP:
 			self.send_bytes(msg_hdr + msg_payload)
 		except SiFT_MTP_Error as e:
 			raise SiFT_MTP_Error('Unable to send message to peer --> ' + e.err_msg)
-
-

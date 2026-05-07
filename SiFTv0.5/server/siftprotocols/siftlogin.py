@@ -5,9 +5,7 @@ from Crypto.Hash import SHA256
 from Crypto.Protocol.KDF import PBKDF2
 from siftprotocols.siftmtp import SiFT_MTP, SiFT_MTP_Error
 
-
 class SiFT_LOGIN_Error(Exception):
-
     def __init__(self, err_msg):
         self.err_msg = err_msg
 
@@ -27,14 +25,12 @@ class SiFT_LOGIN:
     def set_server_users(self, users):
         self.server_users = users
 
-
     # builds a login request from a dictionary
     def build_login_req(self, login_req_struct):
 
         login_req_str = login_req_struct['username']
         login_req_str += self.delimiter + login_req_struct['password'] 
         return login_req_str.encode(self.coding)
-
 
     # parses a login request into a dictionary
     def parse_login_req(self, login_req):
