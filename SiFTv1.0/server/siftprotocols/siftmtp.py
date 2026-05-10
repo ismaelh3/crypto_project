@@ -156,10 +156,7 @@ class SiFT_MTP:
         # Spec requirement: nonce = sqn || rnd
         return parsed_msg_hdr['sqn'] + parsed_msg_hdr['rnd']
 
-    # -------------------------------------------------------------------------
-    # Socket helpers
-    # -------------------------------------------------------------------------
-
+    #### Socket helpers ####
     def receive_bytes(self, n):
         bytes_received = b''
         bytes_count = 0
@@ -190,10 +187,7 @@ class SiFT_MTP:
         except Exception:
             pass
 
-    # -------------------------------------------------------------------------
-    # Crypto helpers
-    # -------------------------------------------------------------------------
-
+    #### Crypto helpers ####
     def encrypt_gcm(self, key, nonce, aad, plaintext):
         try:
             cipher = AES.new(key, AES.MODE_GCM, nonce=nonce, mac_len=self.size_msg_mac)
@@ -245,10 +239,7 @@ class SiFT_MTP:
 
         return temp_key
 
-    # -------------------------------------------------------------------------
-    # Key selection
-    # -------------------------------------------------------------------------
-
+    #### Key selection ####
     def get_send_key(self, msg_type):
         # login_req: fresh temp key generated inside send_msg
         # login_res: use temp_key already learned from login_req
@@ -277,10 +268,6 @@ class SiFT_MTP:
         if self.transfer_key is None:
             raise SiFT_MTP_Error('Transfer key is not set')
         return self.transfer_key
-
-    # -------------------------------------------------------------------------
-    # Receive message
-    # -------------------------------------------------------------------------
 
 	# receives and parses message, returns msg_type and msg_payload
     def receive_msg(self):
@@ -324,7 +311,6 @@ class SiFT_MTP:
                     print('EPD (' + str(len(ciphertext)) + '): ' + ciphertext.hex())
                     print('MAC (' + str(len(tag)) + '): ' + tag.hex())
                     print('ETK (' + str(len(etk)) + '): ' + etk.hex())
-                    print('PLD (' + str(len(plaintext)) + '): ' + plaintext.hex())
                     print('------------------------------------------')
 
             else:
@@ -342,7 +328,6 @@ class SiFT_MTP:
                     print('HDR (' + str(len(msg_hdr)) + '): ' + msg_hdr.hex())
                     print('EPD (' + str(len(ciphertext)) + '): ' + ciphertext.hex())
                     print('MAC (' + str(len(tag)) + '): ' + tag.hex())
-                    print('PLD (' + str(len(plaintext)) + '): ' + plaintext.hex())
                     print('------------------------------------------')
 
             self.last_recv_sqn = sqn
@@ -355,10 +340,7 @@ class SiFT_MTP:
             self.close_connection()
             raise SiFT_MTP_Error('Unexpected receive failure --> ' + str(e))
 
-    # -------------------------------------------------------------------------
-    # Send message
-    # -------------------------------------------------------------------------
-
+    ### SENDING MESSAGE ###
     def send_msg(self, msg_type, msg_payload):
         try:
             if msg_type not in self.msg_types:
@@ -391,7 +373,6 @@ class SiFT_MTP:
                 if self.DEBUG:
                     print('MTP login_req to send (' + str(msg_len) + '):')
                     print('HDR (' + str(len(msg_hdr)) + '): ' + msg_hdr.hex())
-                    print('PLD (' + str(len(msg_payload)) + '): ' + msg_payload.hex())
                     print('EPD (' + str(len(ciphertext)) + '): ' + ciphertext.hex())
                     print('MAC (' + str(len(tag)) + '): ' + tag.hex())
                     print('ETK (' + str(len(etk)) + '): ' + etk.hex())
@@ -411,7 +392,6 @@ class SiFT_MTP:
                 if self.DEBUG:
                     print('MTP message to send (' + str(msg_len) + '):')
                     print('HDR (' + str(len(msg_hdr)) + '): ' + msg_hdr.hex())
-                    print('PLD (' + str(len(msg_payload)) + '): ' + msg_payload.hex())
                     print('EPD (' + str(len(ciphertext)) + '): ' + ciphertext.hex())
                     print('MAC (' + str(len(tag)) + '): ' + tag.hex())
                     print('------------------------------------------')

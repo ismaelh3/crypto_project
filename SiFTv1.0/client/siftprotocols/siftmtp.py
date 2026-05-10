@@ -331,7 +331,6 @@ class SiFT_MTP:
                     print('EPD (' + str(len(ciphertext)) + '): ' + ciphertext.hex())
                     print('MAC (' + str(len(tag)) + '): ' + tag.hex())
                     print('ETK (' + str(len(etk)) + '): ' + etk.hex())
-                    print('PLD (' + str(len(plaintext)) + '): ' + plaintext.hex())
                     print('------------------------------------------')
 
             else:
@@ -349,7 +348,6 @@ class SiFT_MTP:
                     print('HDR (' + str(len(msg_hdr)) + '): ' + msg_hdr.hex())
                     print('EPD (' + str(len(ciphertext)) + '): ' + ciphertext.hex())
                     print('MAC (' + str(len(tag)) + '): ' + tag.hex())
-                    print('PLD (' + str(len(plaintext)) + '): ' + plaintext.hex())
                     print('------------------------------------------')
 
             self.last_recv_sqn = sqn
@@ -398,7 +396,6 @@ class SiFT_MTP:
                 if self.DEBUG:
                     print('MTP login_req to send (' + str(msg_len) + '):')
                     print('HDR (' + str(len(msg_hdr)) + '): ' + msg_hdr.hex())
-                    print('PLD (' + str(len(msg_payload)) + '): ' + msg_payload.hex())
                     print('EPD (' + str(len(ciphertext)) + '): ' + ciphertext.hex())
                     print('MAC (' + str(len(tag)) + '): ' + tag.hex())
                     print('ETK (' + str(len(etk)) + '): ' + etk.hex())
@@ -418,7 +415,6 @@ class SiFT_MTP:
                 if self.DEBUG:
                     print('MTP message to send (' + str(msg_len) + '):')
                     print('HDR (' + str(len(msg_hdr)) + '): ' + msg_hdr.hex())
-                    print('PLD (' + str(len(msg_payload)) + '): ' + msg_payload.hex())
                     print('EPD (' + str(len(ciphertext)) + '): ' + ciphertext.hex())
                     print('MAC (' + str(len(tag)) + '): ' + tag.hex())
                     print('------------------------------------------')
