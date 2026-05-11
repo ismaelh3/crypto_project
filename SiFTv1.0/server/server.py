@@ -14,8 +14,9 @@ class Server:
         self.server_usersfile_rec_delimiter = '\n'
         self.server_usersfile_fld_delimiter = ':'
         self.server_rootdir = './users/'
-        self.server_ip = socket.gethostbyname('localhost')
+        # self.server_ip = socket.gethostbyname('localhost')
         # self.server_ip = socket.gethostbyname(socket.gethostname())
+        self.server_ip = '192.168.20.11'
         self.server_port = 5150
         # -------------------------------------------------------------
         self.server_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
