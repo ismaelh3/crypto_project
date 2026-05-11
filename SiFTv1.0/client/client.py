@@ -10,8 +10,8 @@ from siftprotocols.siftupl import SiFT_UPL, SiFT_UPL_Error
 from siftprotocols.siftdnl import SiFT_DNL, SiFT_DNL_Error
 
 # ----------- CONFIG -------------
-server_ip = '127.0.0.1' # localhost
-# server_ip = '192.168.x.y'
+# server_ip = '127.0.0.1' # localhost
+server_ip = '192.168.20.36'
 server_port = 5150
 # --------------------------------
 
@@ -202,7 +202,7 @@ if __name__ == '__main__':
     mtp = SiFT_MTP(sckt)
     loginp = SiFT_LOGIN(mtp)
     
-    with open("server_public.pem", "rb") as f:
+    with open("srvpubkey.pem", "rb") as f:
         public_key = RSA.import_key(f.read())
     loginp.set_server_public_key(public_key)
     
